@@ -50,7 +50,20 @@ int main(int argc, char *argv[])
         {
             puts("cd command");
         }
+		else if (strcmp(command, "help") == 0)
+		{
+			FILE *file;
+			file = fopen("readme.txt", "r");
 
+			if (file == NULL)
+				fputs("Error opening help instructions.", stdout);
+
+			char readBuffer[100];
+			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
+			{
+				fwrite(readBuffer, sizeof readBuffer, 1, stdout);
+			}
+		}
         // other commands here...
         
         // quit command -- exit the shell
