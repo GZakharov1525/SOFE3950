@@ -34,27 +34,23 @@ int main(int argc, char *argv[])
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
     {
         // Perform string tokenization to get the command and argument
+        char delimeters[] = " \n";
+        char* token = strtok(buffer, delimeters);
+        strcpy(command, token);
 
+        while (token != NULL) {
+            if (strcmp(token, command) != 0) strcat(arg, token);
+            strcat(arg, " ");
+            token = strtok(NULL, delimeters);
+        }
+        
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
-            // your code here
+            puts("cd command");
         }
-		else if (strcmp(command, "help") == 0)
-		{
-			FILE *file;
-			file = fopen("readme.txt", "r");
 
-			if (file == NULL)
-				fputs("Error opening help instructions.", stdout);
-
-			char readBuffer[100];
-			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
-			{
-				fwrite(readBuffer, sizeof readBuffer, 1, stdout);
-			}
-		}
         // other commands here...
         
         // quit command -- exit the shell
@@ -62,11 +58,15 @@ int main(int argc, char *argv[])
         {
             return EXIT_SUCCESS;
         }
+
         // Unsupported command
         else
         {
             fputs("Unsupported command, use help to display the manual\n", stderr);
         }
+
+        memset(command, 0, 255);
+        memset(arg, 0 , 255);
     }
     return EXIT_SUCCESS;
 }
