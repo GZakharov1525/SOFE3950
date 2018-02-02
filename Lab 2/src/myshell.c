@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 		else if (strcmp(command, "help") == 0)
 		{
 			FILE *file;
-			file = fopen("helpFile.txt", "r");
+			file = fopen("readme.txt", "r");
 
 			if (file == NULL)
 				fputs("Error opening help instructions.", stdout);
