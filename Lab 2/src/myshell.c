@@ -43,27 +43,37 @@ int main(int argc, char *argv[])
             strcat(arg, " ");
             token = strtok(NULL, delimeters);
         }
+		//puts("here");
         
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
             puts("cd command");
+			int report;
+			report = chdir(arg);
+			if (report != 0)
+				puts("Failed to change directory, no such directory found.");
         }
 		else if (strcmp(command, "help") == 0)
 		{
+			//puts("in help");
 			FILE *file;
 			file = fopen("readme.txt", "r");
 
 			if (file == NULL)
+			{
 				fputs("Error opening help instructions.", stdout);
-
+			}
+			//puts("after file open");
 			char readBuffer[100];
 			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
 			{
 				fwrite(readBuffer, sizeof readBuffer, 1, stdout);
 			}
+			//puts("finished reading file");
 		}
+		
         // other commands here...
         
         // quit command -- exit the shell
