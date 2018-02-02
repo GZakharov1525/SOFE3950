@@ -41,7 +41,20 @@ int main(int argc, char *argv[])
         {
             // your code here
         }
+		else if (strcmp(command, "help") == 0)
+		{
+			FILE *file;
+			file = fopen("helpFile.txt", "r");
 
+			if (file == NULL)
+				fputs("Error opening help instructions.", stdout);
+
+			char readBuffer[100];
+			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
+			{
+				fwrite(readBuffer, sizeof readBuffer, 1, stdout);
+			}
+		}
         // other commands here...
         
         // quit command -- exit the shell
@@ -49,7 +62,6 @@ int main(int argc, char *argv[])
         {
             return EXIT_SUCCESS;
         }
-
         // Unsupported command
         else
         {
