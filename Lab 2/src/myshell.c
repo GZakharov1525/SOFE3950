@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 			char readBuffer[100];
 			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
 			{
-				fwrite(readBuffer, sizeof readBuffer, 1, stdout);
+				puts(readBuffer);
 			}
 			//puts("finished reading file");
 		}
