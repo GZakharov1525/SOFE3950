@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
             token = strtok(NULL, delimeters);
         }
 		//puts("here");
-        
+		puts(arg);
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
