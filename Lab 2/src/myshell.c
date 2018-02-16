@@ -38,9 +38,21 @@ int main(int argc, char *argv[])
         char* token = strtok(buffer, delimeters);
         strcpy(command, token);
 
+        char * args[10];
+
+        for (int i = 0; i < 10; i++) {
+          args[i] = "";
+        }
+
+        int j = 0;
+
         while (token) {
-          strcpy(arg, token);
+          if (strcmp(command, token) != 0) args[j++] = token;
           token = strtok(NULL, delimeters);
+        }
+
+        for (int i = 0; i < 10; i++) {
+          printf("%s\n", args[i]);
         }
 
 		//puts("here");
@@ -76,7 +88,6 @@ int main(int argc, char *argv[])
 
         // other commands here...
         else if (strcmp(command, "echo") == 0) {
-          printf("\n%s\n", &arg[0]);
         }
 
         // quit command -- exit the shell
