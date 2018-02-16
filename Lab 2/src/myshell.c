@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
         strcpy(command, token);
 
         while (token) {
+          strcpy(arg, token);
           token = strtok(NULL, delimeters);
         }
 
@@ -74,6 +75,9 @@ int main(int argc, char *argv[])
 		}
 
         // other commands here...
+        else if (strcmp(command, "echo") == 0) {
+          printf("\n%s\n", &arg[0]);
+        }
 
         // quit command -- exit the shell
         else if (strcmp(command, "quit") == 0)
