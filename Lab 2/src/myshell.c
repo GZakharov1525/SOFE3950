@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2017, <GROUP MEMBERS>
  * All rights reserved.
- * 
+ *
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,11 +38,23 @@ int main(int argc, char *argv[])
         char* token = strtok(buffer, delimeters);
         strcpy(command, token);
 
-        while (token != NULL) {
-            if (strcmp(token, command) != 0) strcat(arg, token);
-            strcat(arg, " ");
-            token = strtok(NULL, delimeters);
+        char * args[10];
+
+        for (int i = 0; i < 10; i++) {
+          args[i] = "";
         }
+
+        int j = 0;
+
+        while (token) {
+          if (strcmp(command, token) != 0) args[j++] = token;
+          token = strtok(NULL, delimeters);
+        }
+
+        for (int i = 0; i < 10; i++) {
+          printf("%s\n", args[i]);
+        }
+
 		//puts("here");
 <<<<<<< HEAD
 		puts(arg);
@@ -77,9 +89,11 @@ int main(int argc, char *argv[])
 			}
 			//puts("finished reading file");
 		}
-		
+
         // other commands here...
-        
+        else if (strcmp(command, "echo") == 0) {
+        }
+
         // quit command -- exit the shell
         else if (strcmp(command, "quit") == 0)
         {
