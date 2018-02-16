@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2017, <GROUP MEMBERS>
  * All rights reserved.
- * 
+ *
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,13 +38,12 @@ int main(int argc, char *argv[])
         char* token = strtok(buffer, delimeters);
         strcpy(command, token);
 
-        while (token != NULL) {
-            if (strcmp(token, command) != 0) strcat(arg, token);
-            strcat(arg, " ");
-            token = strtok(NULL, delimeters);
+        while (token) {
+          token = strtok(NULL, delimeters);
         }
+
 		//puts("here");
-        
+
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
@@ -73,9 +72,9 @@ int main(int argc, char *argv[])
 			}
 			//puts("finished reading file");
 		}
-		
+
         // other commands here...
-        
+
         // quit command -- exit the shell
         else if (strcmp(command, "quit") == 0)
         {
