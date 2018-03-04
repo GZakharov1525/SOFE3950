@@ -55,19 +55,20 @@ int main(int argc, char *argv[])
           printf("%s\n", args[i]);
         }
 
+		for (int i = 0; i < 10; i++)
+		{
+			printf("%s\n", args[i]);
+		}
 		//puts("here");
-<<<<<<< HEAD
-		puts(arg);
-=======
-
->>>>>>> 8b57c568a341ee3b193d7227a31bbefd05d87004
+		//puts(arg);
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
+			//if (strcmp(args[0], ".." ))
             puts("cd command");
 			int report;
-			report = chdir(arg);
+			report = chdir(args[0]); // custom directory
 			if (report != 0)
 				puts("Failed to change directory, no such directory found.");
         }
