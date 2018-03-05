@@ -92,11 +92,13 @@ void* checkSubGrid(void* args)
 	int subGrid[] = { 0,3,6 };
 	int* argPtr = 0;
 
+	// Used to retrieve arguments from pointer
+	int arg1 = args[0];
+	int arg2 = args[1];
+
 	// Variables to determine end index of for loops
 	//used to avoid re-calculating index in each iteration
 	//of the loop if using 'row <= startIndex + gridSize'.
-	int arg1 = args[0];
-	int arg2 = args[1];
 	startRow = subGrid[arg1];
 	startCol = subGrid[arg2];
 	endRow = subGrid[arg1] + gridSize;
