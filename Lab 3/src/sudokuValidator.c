@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
 			printf("%d |", sudoku[row][column]);
 		}
 		// Skip the two formatting characters at the end of each line
+		//(probably the '\' and 'n' characters used to make '\n')
 		fgetc(inputFile);
 		fgetc(inputFile);
 		// Debugging line
@@ -62,6 +63,7 @@ int checkColumn(int row)
 		else
 		{
 			// Number has now been encountered for the first time
+			//and should be added to list of encountered numbers.
 			check[temp - 1] = temp;
 		}
 	}
@@ -93,6 +95,7 @@ int checkRow(int column)
 		else
 		{
 			// Number has now been encountered for the first time
+			//and should be added to list of encountered numbers.
 			check[temp - 1] = temp;
 		}
 	}
@@ -101,9 +104,49 @@ int checkRow(int column)
 	return 1;
 }
 
-int checkBox()
+int checkSubGrid(int subRow, int subCol)
 {
+	int startRow;
+	int startCol;
+	int endRow;
+	int endCol;
+	int gridSize = 3;
+	int checkGrid[9];
+	int subGrid[] = { 0,3,6 };
 
+	// Variables to determine end index of for loops
+	//used to avoid re-calculating index in each iteration
+	//of the loop if using 'row <= startIndex + gridSize'.
+	startRow = subGrid[subRow];
+	startCol = subGrid[subCol];
+	endRow = subGrid[subRow] + gridSize;
+	endCol = subGrid[subCol] + gridSize;
+
+	for (int row = startRow; row <= endRow; row++)
+	{
+		for (int column = startCol; column <= endCol; column++)
+		{
+			// Check if number has been found already, if so
+			//return value corresponding to an invalid solution.
+			// Arrays are zero based so must offset number by 1
+			int temp = sudoku[row][column];
+			if (temp == 0)
+			{
+				// Ignore zero values
+			}
+			else if (temp == checkGrid[temp - 1])
+			{
+				// Duplicate number has been found, invalid solution
+				return 0;
+			}
+			else
+			{
+				// Number has now been encountered for the first time
+				//and should be added to list of encountered numbers.
+				checkGrid[temp - 1] = temp;
+			}
+		}
+	}
 
 	// Valid solution, no duplicate numbers found
 	return 1;
