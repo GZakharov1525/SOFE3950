@@ -28,6 +28,15 @@ int main(int argc, char *argv[])
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
 
+	// Array to keep track of working directory changes
+	//during process lifetime, since chdir() is a child process
+	//and the change to cwd does not affect the shell parent process
+	char *currentDirectory[30];
+	for (int i = 0; i < 30; i++)
+	{
+		currentDirectory[i] = NULL;
+	}
+
     // Parse the commands provided using argc and argv
 
     // Perform an infinite loop getting command input from users
@@ -51,14 +60,20 @@ int main(int argc, char *argv[])
           token = strtok(NULL, delimeters);
         }
 
-        for (int i = 0; i < 10; i++) {
+     /*   for (int i = 0; i < 10; i++) {
           printf("%s\n", args[i]);
         }
 
 		for (int i = 0; i < 10; i++)
 		{
 			printf("%s\n", args[i]);
-		}
+		}*/
+
+		//for (int count = 0; count < 30; count++)
+		//{
+		//	currentDirectory[count] = NULL;
+		//	printf("%s |", currentDirectory[count]);
+		//}
 		//puts("here");
 		//puts(arg);
         // Check the command and execute the operations for each command
