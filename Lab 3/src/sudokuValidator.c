@@ -191,6 +191,7 @@ int main(int argc, char* argv[])
 	if (inputFile == NULL)
 	{
 		printf("Could not open solution file.");
+		exit(1);
 	}
 
 	for (int row = 0; row < 9; row++)
@@ -243,7 +244,7 @@ int main(int argc, char* argv[])
 		{
 			thread_args[0] = grid;
 			thread_args[1] = subgrid;
-			if (pthread_create(&thid[counter], NULL, checkSubGrid, (void*)&thread_args) != 0)
+			if (pthread_create(&thid[counter], NULL, checkSubGrid, &thread_args) != 0)
 			{
 				perror("pthread_create() error for subgrids");
 				exit(1);
