@@ -11,12 +11,15 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void* checkColumn(void* args)
 {
+	puts("entered checkColumn \n");
 	// Array to keep track of which numbers have been encountered
 	int check[9] = { -1 };
 	// Cast void pointer to the data structure you need
 	//int* argPtr = args;
 	//int row = argPtr;
+	puts("checkpoint 0 \n");
 	int row = *((int *)args);
+	puts("checkpoint 1 \n");
 
 	for (int column = 0; column < 9; column++)
 	{
@@ -24,6 +27,7 @@ void* checkColumn(void* args)
 		//return value corresponding to an invalid solution.
 		// Arrays are zero based so must offset number by 1
 		int temp = sudoku[row][column];
+		puts("checkpoint 2 \n");
 		if (temp == 0)
 		{
 			// Ignore zero values
@@ -47,22 +51,27 @@ void* checkColumn(void* args)
 			//and should be added to list of encountered numbers.
 			check[temp - 1] = temp;
 		}
+		puts("checkpoint 3 \n");
 	}
 
 	// Valid solution, no duplicate numbers found
 	//return 1;
 	//argPtr = 1;
 	//pthread_exit(argPtr);
+	puts("checkpoint 4 \n");
 	pthread_mutex_lock(&mutex);
 	results[position] = 1;
 	position++;
 	pthread_mutex_unlock(&mutex);
+
+	puts("exiting checkColumn \n");
 
 	pthread_exit(0);
 }
 
 void* checkRow(void* args)
 {
+	puts("entered checkRow \n");
 	// Array to keep track of which numbers have been encountered
 	int check[9] = { -1 };
 	// Cast void pointer to the data structure you need
@@ -110,11 +119,14 @@ void* checkRow(void* args)
 	position++;
 	pthread_mutex_unlock(&mutex);
 
+	puts("exiting checkRow \n");
+
 	pthread_exit(0);
 }
 
 void* checkSubGrid(void* args)
 {
+	puts("entered checkSubGrid \n");
 	int startRow;
 	int startCol;
 	int endRow;
@@ -180,6 +192,8 @@ void* checkSubGrid(void* args)
 	position++;
 	pthread_mutex_unlock(&mutex);
 
+	puts("exited checkSubGrid \n");
+
 	pthread_exit(0);
 }
 
@@ -220,6 +234,8 @@ int main(int argc, char* argv[])
 	int thread_args[2];
 	int counter = 0;
 
+	puts("Creating row/col threads \n");
+
 	for (int i = 0; i < 9; i++)
 	{
 		// Spawns a thread for each row and column
@@ -228,15 +244,18 @@ int main(int argc, char* argv[])
 			perror("pthread_create() error for columns");
 			exit(1);
 		}
+		puts("col thread created \n");
 		counter++;
 		if (pthread_create(&thid[counter], NULL, checkRow, i) != 0)
 		{
 			perror("pthread_create() error for rows");
 			exit(1);
 		}
+		puts("row thread created \n");
 		counter++;
 	}
 
+	puts("creating subgrid threads \n");
 	// Spawns a thread for each subgrid
 	for (int grid = 0; grid <= 2; grid++)
 	{
@@ -249,6 +268,7 @@ int main(int argc, char* argv[])
 				perror("pthread_create() error for subgrids");
 				exit(1);
 			}
+			puts("created subgrid thread \n");
 			counter++;
 		}
 	}
@@ -260,6 +280,7 @@ int main(int argc, char* argv[])
 	//	results[i] = pthread_join(thid[i], NULL);
 	//}
 
+	puts("verifying solution \n");
 	// Verify that all results passed back from checks are valid
 	for (int verify = 0; verify < 27; verify++)
 	{

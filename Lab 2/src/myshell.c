@@ -18,6 +18,7 @@
 #define BUFFER_LEN 256
 
 // Put global environment variables here
+char* PWD;
 
 // Define functions declared in myshell.h here
 
@@ -27,15 +28,6 @@ int main(int argc, char *argv[])
     char buffer[BUFFER_LEN] = { 0 };
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
-
-	// Array to keep track of working directory changes
-	//during process lifetime, since chdir() is a child process
-	//and the change to cwd does not affect the shell parent process
-	char *currentDirectory[30];
-	for (int i = 0; i < 30; i++)
-	{
-		currentDirectory[i] = NULL;
-	}
 
     // Parse the commands provided using argc and argv
 
@@ -47,7 +39,7 @@ int main(int argc, char *argv[])
         char* token = strtok(buffer, delimeters);
         strcpy(command, token);
 
-        char * args[10];
+        char* args[10];
 
         for (int i = 0; i < 10; i++) {
           args[i] = "";
@@ -80,6 +72,9 @@ int main(int argc, char *argv[])
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
+			// Allocate memory in the first place you use the global var
+			PWD = malloc();
+
 			//if (strcmp(args[0], ".." ))
             puts("cd command");
 			int report;
