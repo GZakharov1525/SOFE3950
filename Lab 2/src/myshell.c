@@ -18,6 +18,7 @@
 #define BUFFER_LEN 256
 
 // Put global environment variables here
+char* PWD;
 
 // Define functions declared in myshell.h here
 
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
         char* token = strtok(buffer, delimeters);
         strcpy(command, token);
 
-        char * args[10];
+        char* args[10];
 
         for (int i = 0; i < 10; i++) {
           args[i] = "";
@@ -51,20 +52,29 @@ int main(int argc, char *argv[])
           token = strtok(NULL, delimeters);
         }
 
-        for (int i = 0; i < 10; i++) {
+     /*   for (int i = 0; i < 10; i++) {
           printf("%s\n", args[i]);
         }
 
 		for (int i = 0; i < 10; i++)
 		{
 			printf("%s\n", args[i]);
-		}
+		}*/
+
+		//for (int count = 0; count < 30; count++)
+		//{
+		//	currentDirectory[count] = NULL;
+		//	printf("%s |", currentDirectory[count]);
+		//}
 		//puts("here");
 		//puts(arg);
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
+			// Allocate memory in the first place you use the global var
+			PWD = malloc();
+
 			//if (strcmp(args[0], ".." ))
             puts("cd command");
 			int report;
