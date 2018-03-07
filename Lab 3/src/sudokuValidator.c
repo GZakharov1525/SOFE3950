@@ -294,11 +294,13 @@ int main(int argc, char* argv[])
 			//thread_args[0] = grid;
 			//thread_args[1] = subgrid;
 			//pthread_create(&thid[counter], NULL, checkSubGrid, &thread_args)
-			//thread_args[0] = subgrid_vars[grid];
-			//thread_args[1] = subgrid_vars[subgrid];
-			run.row = subgrid_vars[grid];
-			run.col = subgrid_vars[subgrid];
-			if (pthread_create(&thid[counter], NULL, checkSubGrid, &run) != 0)
+			thread_args[0] = subgrid_vars[grid];
+			thread_args[1] = subgrid_vars[subgrid];
+			//run.row = subgrid_vars[grid];
+			//run.col = subgrid_vars[subgrid];
+			// Can use single-index array in checkSubGrid to identify which of the 9 subgrids
+			//to start at, then send in a single variable like before to pick it out.
+			if (pthread_create(&thid[counter], NULL, checkSubGrid, &thread_args) != 0)
 			{
 				perror("pthread_create() error for subgrids");
 				exit(1);
