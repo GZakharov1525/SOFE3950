@@ -1,0 +1,3 @@
+/home/tblain/Documents/OpSys/Project/SOFE3950/Lab 2/CMakeFiles/rebuild_cache.dir
+/home/tblain/Documents/OpSys/Project/SOFE3950/Lab 2/CMakeFiles/OSlab2.dir
+/home/tblain/Documents/OpSys/Project/SOFE3950/Lab 2/CMakeFiles/edit_cache.dir

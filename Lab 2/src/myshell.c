@@ -16,9 +16,10 @@
 
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
+#define ARG_NUM 10
 
 // Put global environment variables here
-char* PWD;
+char PWD[BUFFER_LEN];
 
 // Define functions declared in myshell.h here
 
@@ -28,6 +29,8 @@ int main(int argc, char *argv[])
     char buffer[BUFFER_LEN] = { 0 };
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
+
+    printf("%s $", getcwd(PWD, sizeof(PWD)));
 
     // Parse the commands provided using argc and argv
 
@@ -39,9 +42,9 @@ int main(int argc, char *argv[])
         char* token = strtok(buffer, delimeters);
         strcpy(command, token);
 
-        char* args[10];
+        char* args[ARG_NUM];
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < ARG_NUM; i++) {
           args[i] = "";
         }
 
@@ -52,57 +55,60 @@ int main(int argc, char *argv[])
           token = strtok(NULL, delimeters);
         }
 
+
      /*   for (int i = 0; i < 10; i++) {
           printf("%s\n", args[i]);
         }
 
-		for (int i = 0; i < 10; i++)
-		{
-			printf("%s\n", args[i]);
-		}*/
+    		for (int i = 0; i < 10; i++)
+    		{
+    			printf("%s\n", args[i]);
+    		}*/
 
-		//for (int count = 0; count < 30; count++)
-		//{
-		//	currentDirectory[count] = NULL;
-		//	printf("%s |", currentDirectory[count]);
-		//}
-		//puts("here");
-		//puts(arg);
+    		//for (int count = 0; count < 30; count++)
+    		//{
+    		//	currentDirectory[count] = NULL;
+    		//	printf("%s |", currentDirectory[count]);
+    		//}
+    		//puts("here");
+    		//puts(arg);
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
-			// Allocate memory in the first place you use the global var
-			PWD = malloc();
+  			// Allocate memory in the first place you use the global var
 
-			//if (strcmp(args[0], ".." ))
-            puts("cd command");
-			int report;
-			report = chdir(args[0]); // custom directory
-			if (report != 0)
-				puts("Failed to change directory, no such directory found.");
+  			//if (strcmp(args[0], ".." ))
+        puts("cd command");
+  			int report;
+  			report = chdir(args[0]); // custom directory
+  			if (report != 0)
+  				puts("Failed to change directory, no such directory found.");
         }
-		else if (strcmp(command, "help") == 0)
-		{
-			//puts("in help");
-			FILE *file;
-			file = fopen("readme.txt", "r");
+    		else if (strcmp(command, "help") == 0)
+    		{
+    			//puts("in help");
+    			FILE *file;
+    			file = fopen("readme.txt", "r");
 
-			if (file == NULL)
-			{
-				fputs("Error opening help instructions.", stdout);
-			}
-			//puts("after file open");
-			char readBuffer[100];
-			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
-			{
-				puts(readBuffer);
-			}
-			//puts("finished reading file");
-		}
+    			if (file == NULL)
+    			{
+    				fputs("Error opening help instructions.", stdout);
+    			}
+    			//puts("after file open");
+    			char readBuffer[100];
+    			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
+    			{
+    				puts(readBuffer);
+    			}
+    			//puts("finished reading file");
+    		}
 
         // other commands here...
         else if (strcmp(command, "echo") == 0) {
+          for (int i = 0; i < ARG_NUM; i++) {
+            printf("%s ", args[i]);
+          } printf("\n");
         }
 
         // quit command -- exit the shell
@@ -119,6 +125,7 @@ int main(int argc, char *argv[])
 
         memset(command, 0, 255);
         memset(arg, 0 , 255);
+        printf("%s $", getcwd(PWD, sizeof(PWD)));
     }
     return EXIT_SUCCESS;
 }
