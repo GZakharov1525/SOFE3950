@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     char arg[BUFFER_LEN] = { 0 };
 
     // Parse the commands provided using argc and argv
-    if (argc > 0) using_files = 1;
+    if (argc > 1) using_files = 1;
 
     if (using_files == 0) {
       printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
@@ -137,6 +137,8 @@ int main(int argc, char *argv[])
         else if (strcmp(command, "environ") == 0) {
           printf("PWD: %s\n", PWD);
           printf("SHELL: %s\n", SHELL);
+          printf("arg_c: %d\n", arg_c);
+          printf("using_files: %d\n", using_files);
         }
 
         // other commands here...

@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named OSlab2
+# Target rules for targets named myshell
 
 # Build rule for target.
-OSlab2: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 OSlab2
-.PHONY : OSlab2
+myshell: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 myshell
+.PHONY : myshell
 
 # fast build rule for target.
-OSlab2/fast:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/build
-.PHONY : OSlab2/fast
+myshell/fast:
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/build
+.PHONY : myshell/fast
 
 src/myshell.o: src/myshell.c.o
 
@@ -129,7 +129,7 @@ src/myshell.o: src/myshell.c.o
 
 # target to build an object file
 src/myshell.c.o:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/src/myshell.c.o
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/src/myshell.c.o
 .PHONY : src/myshell.c.o
 
 src/myshell.i: src/myshell.c.i
@@ -138,7 +138,7 @@ src/myshell.i: src/myshell.c.i
 
 # target to preprocess a source file
 src/myshell.c.i:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/src/myshell.c.i
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/src/myshell.c.i
 .PHONY : src/myshell.c.i
 
 src/myshell.s: src/myshell.c.s
@@ -147,7 +147,7 @@ src/myshell.s: src/myshell.c.s
 
 # target to generate assembly for a file
 src/myshell.c.s:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/src/myshell.c.s
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/src/myshell.c.s
 .PHONY : src/myshell.c.s
 
 src/utility.o: src/utility.c.o
@@ -156,7 +156,7 @@ src/utility.o: src/utility.c.o
 
 # target to build an object file
 src/utility.c.o:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/src/utility.c.o
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/src/utility.c.o
 .PHONY : src/utility.c.o
 
 src/utility.i: src/utility.c.i
@@ -165,7 +165,7 @@ src/utility.i: src/utility.c.i
 
 # target to preprocess a source file
 src/utility.c.i:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/src/utility.c.i
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/src/utility.c.i
 .PHONY : src/utility.c.i
 
 src/utility.s: src/utility.c.s
@@ -174,7 +174,7 @@ src/utility.s: src/utility.c.s
 
 # target to generate assembly for a file
 src/utility.c.s:
-	$(MAKE) -f CMakeFiles/OSlab2.dir/build.make CMakeFiles/OSlab2.dir/src/utility.c.s
+	$(MAKE) -f CMakeFiles/myshell.dir/build.make CMakeFiles/myshell.dir/src/utility.c.s
 .PHONY : src/utility.c.s
 
 # Help Target
@@ -184,7 +184,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... OSlab2"
+	@echo "... myshell"
 	@echo "... edit_cache"
 	@echo "... src/myshell.o"
 	@echo "... src/myshell.i"
