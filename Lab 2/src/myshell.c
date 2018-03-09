@@ -34,13 +34,8 @@ int main(int argc, char *argv[])
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
 
-<<<<<<< HEAD
     printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
     getcwd(SHELL, sizeof(SHELL));
-=======
-    //printf("%s $", getcwd(PWD, sizeof(PWD)));
-    //getcwd(SHELL, sizeof(SHELL));
->>>>>>> 0ffa3522a029af80b5ffe5cb2911975084f7d5c5
 
     // Parse the commands provided using argc and argv
 
@@ -55,20 +50,15 @@ int main(int argc, char *argv[])
 
         char* args[ARG_NUM];
 
-        for (int i = 0; i < ARG_NUM; i++) 
+        for (int i = 0; i < ARG_NUM; i++)
 		{
           args[i] = "";
         }
 
         int j = 0;
 
-<<<<<<< HEAD
         while (token) {
           arg_c++;
-=======
-        while (token) 
-		{
->>>>>>> 0ffa3522a029af80b5ffe5cb2911975084f7d5c5
           if (strcmp(command, token) != 0) args[j++] = token;
           token = strtok(NULL, delimeters);
         }
@@ -78,7 +68,6 @@ int main(int argc, char *argv[])
         if (strcmp(command, "cd") == 0)
         {
 			// Allocate memory in the first place you use the global var
-<<<<<<< HEAD
 			getcwd(PWD, sizeof(PWD));
       if (arg_c > 2) {
         char d[BUFFER_LEN] = "";
@@ -97,30 +86,6 @@ int main(int argc, char *argv[])
         }
       }
 
-=======
-			//PWD = (char* )malloc((sizeof (char)) * 256);
-			if (args[0] == NULL)
-			{
-				if (PWD == NULL)
-				{
-					// cd command has not been used before, same directory as
-					//shell parent process
-					char cwd[256];
-					getcwd(cwd, sizeof(cwd));
-
-					printf("Current working directory: %s \n", cwd);
-				}
-				else
-				{
-					// cd command has been used before
-					printf("Current working directory: %s \n", PWD);
-				}
-			}
-			else if (chdir(args[0]) != 0)
-			{
-				perror("Failed to change directory, the directory may not exist. \n");
-			}
->>>>>>> 0ffa3522a029af80b5ffe5cb2911975084f7d5c5
 
 			if (getcwd(PWD, sizeof(PWD)) == NULL)
 			{
