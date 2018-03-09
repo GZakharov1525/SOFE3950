@@ -24,6 +24,7 @@
 char PWD[BUFFER_LEN];
 char SHELL[BUFFER_LEN];
 int arg_c;
+int using_files = 0;
 
 // Define functions declared in myshell.h here
 
@@ -34,10 +35,15 @@ int main(int argc, char *argv[])
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
 
-    printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
-    getcwd(SHELL, sizeof(SHELL));
-
     // Parse the commands provided using argc and argv
+    if (argc > 0) using_files = 1;
+
+    if (using_files == 0) {
+      printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
+    } else {
+      getcwd(PWD, sizeof(PWD));
+    }
+    getcwd(SHELL, sizeof(SHELL));
 
     // Perform an infinite loop getting command input from users
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
@@ -162,7 +168,9 @@ int main(int argc, char *argv[])
 
         memset(command, 0, 255);
         memset(arg, 0 , 255);
-        printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
+        if (using_files == 0) {
+          printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
+        }
     }
     return EXIT_SUCCESS;
 }

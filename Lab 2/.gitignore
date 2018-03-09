@@ -6,6 +6,10 @@ build
 CMakeCache.txt
 CMakeFiles
 
+#Stdin Stdout text files
+input.txt
+output.txt
+
 # Compiled Object files
 *.slo
 *.lo
