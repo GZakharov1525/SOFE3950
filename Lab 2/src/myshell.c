@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
 
-    printf("%s $", getcwd(PWD, sizeof(PWD)));
-    getcwd(SHELL, sizeof(SHELL));
+    //printf("%s $", getcwd(PWD, sizeof(PWD)));
+    //getcwd(SHELL, sizeof(SHELL));
 
     // Parse the commands provided using argc and argv
 
@@ -46,26 +46,18 @@ int main(int argc, char *argv[])
 
         char* args[ARG_NUM];
 
-        for (int i = 0; i < ARG_NUM; i++) {
+        for (int i = 0; i < ARG_NUM; i++) 
+		{
           args[i] = "";
         }
 
         int j = 0;
 
-        while (token) {
+        while (token) 
+		{
           if (strcmp(command, token) != 0) args[j++] = token;
           token = strtok(NULL, delimeters);
         }
-
-
-     /*   for (int i = 0; i < 10; i++) {
-          printf("%s\n", args[i]);
-        }
-
-    		for (int i = 0; i < 10; i++)
-    		{
-    			printf("%s\n", args[i]);
-    		}*/
 
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
@@ -73,7 +65,7 @@ int main(int argc, char *argv[])
         {
 			puts("cd command");
 			// Allocate memory in the first place you use the global var
-			PWD = (char* )malloc(sizeof (char));
+			//PWD = (char* )malloc((sizeof (char)) * 256);
 			if (args[0] == NULL)
 			{
 				if (PWD == NULL)
@@ -119,24 +111,23 @@ int main(int argc, char *argv[])
 				printf("Current working directory: %s \n", PWD);
 			}
 		}
-  		  else if (strcmp(command, "help") == 0)
+  		else if (strcmp(command, "help") == 0)
+		{
+    		//puts("in help");
+    		FILE *file;
+    		file = fopen("readme.txt", "r");
+    		if (file == NULL)
     		{
-    			//puts("in help");
-    			FILE *file;
-    			file = fopen("readme.txt", "r");
-
-    			if (file == NULL)
-    			{
-    				fputs("Error opening help instructions.", stdout);
-    			}
-    			//puts("after file open");
-    			char readBuffer[100];
-    			while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
-    			{
-    				puts(readBuffer);
-    			}
-    			//puts("finished reading file");
+    			fputs("Error opening help instructions.", stdout);
     		}
+    		//puts("after file open");
+    		char readBuffer[100];
+    		while (fgets(readBuffer, sizeof readBuffer, file) != NULL)
+    		{
+    			puts(readBuffer);
+    		}
+    		//puts("finished reading file");
+    	}
 
         else if (strcmp(command, "environ") == 0) {
           printf("PWD: %s\n", PWD);
@@ -149,6 +140,11 @@ int main(int argc, char *argv[])
             printf("%s ", args[i]);
           } printf("\n");
         }
+
+		else if (strcmp(command, "clr") == 0)
+		{
+			printf("\e[1;1H\e[2J");
+		}
 
         else if (strcmp(command, "ls") == 0) {
         }
