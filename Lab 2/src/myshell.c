@@ -20,6 +20,7 @@
 
 // Put global environment variables here
 char PWD[BUFFER_LEN];
+char SHELL[BUFFER_LEN];
 
 // Define functions declared in myshell.h here
 
@@ -31,6 +32,7 @@ int main(int argc, char *argv[])
     char arg[BUFFER_LEN] = { 0 };
 
     printf("%s $", getcwd(PWD, sizeof(PWD)));
+    getcwd(SHELL, sizeof(SHELL));
 
     // Parse the commands provided using argc and argv
 
@@ -76,15 +78,12 @@ int main(int argc, char *argv[])
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
-  			// Allocate memory in the first place you use the global var
-
   			//if (strcmp(args[0], ".." ))
-        puts("cd command");
-  			int report;
-  			report = chdir(args[0]); // custom directory
-  			if (report != 0)
-  				puts("Failed to change directory, no such directory found.");
-        }
+    			int report;
+    			report = chdir(args[0]); // custom directory
+    			if (report != 0)
+    				puts("Failed to change directory, no such directory found.");
+          }
     		else if (strcmp(command, "help") == 0)
     		{
     			//puts("in help");
@@ -104,11 +103,19 @@ int main(int argc, char *argv[])
     			//puts("finished reading file");
     		}
 
+        else if (strcmp(command, "environ") == 0) {
+          printf("PWD: %s\n", PWD);
+          printf("SHELL: %s\n", SHELL);
+        }
+
         // other commands here...
         else if (strcmp(command, "echo") == 0) {
           for (int i = 0; i < ARG_NUM; i++) {
             printf("%s ", args[i]);
           } printf("\n");
+        }
+
+        else if (strcmp(command, "ls") == 0) {
         }
 
         // quit command -- exit the shell
