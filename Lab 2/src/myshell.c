@@ -68,19 +68,45 @@ int main(int argc, char *argv[])
 		//}
 		//puts("here");
 		//puts(arg);
+
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
+			puts("cd command");
 			// Allocate memory in the first place you use the global var
-			PWD = malloc();
+			PWD = (char* )malloc(sizeof (char));
+			if (args[0] == NULL)
+			{
+				if (PWD == NULL)
+				{
+					// cd command has not been used before, same directory as
+					//shell parent process
+					char cwd[256];
+					getcwd(cwd, sizeof(cwd));
 
-			//if (strcmp(args[0], ".." ))
-            puts("cd command");
-			int report;
-			report = chdir(args[0]); // custom directory
-			if (report != 0)
-				puts("Failed to change directory, no such directory found.");
+					printf("Current working directory: %s \n", cwd);
+				}
+				else
+				{
+					// cd command has been used before
+					printf("Current working directory: %s \n", PWD);
+				}
+			}
+			else if (chdir(args[0]) != 0)
+			{
+				perror("Failed to change directory, the directory may not exist. \n");
+			}
+
+			if (getcwd(PWD, sizeof(PWD)) == NULL)
+			{
+				perror("Error in setting PWD. \n");
+			}
+
+			//int report;
+			//report = chdir(args[0]); // custom directory
+			//if (report != 0)
+				//puts("Failed to change directory, no such directory found.");
         }
 		else if (strcmp(command, "help") == 0)
 		{
@@ -100,9 +126,28 @@ int main(int argc, char *argv[])
 			}
 			//puts("finished reading file");
 		}
+		else if (strcmp(command, "cwd") == 0)
+		{
+			if (PWD == NULL)
+			{ 
+				// cd command has not been used yet, same directory as
+				//shell parent process
+				char cwd[256];
+				getcwd(cwd, sizeof(cwd));
+
+				printf("Current working directory: %s \n", cwd);
+			}
+			else
+			{
+				// cd command has been used before
+				printf("Current working directory: %s \n", PWD);
+			}
+		}
 
         // other commands here...
-        else if (strcmp(command, "echo") == 0) {
+        else if (strcmp(command, "echo") == 0) 
+		{
+
         }
 
         // quit command -- exit the shell
