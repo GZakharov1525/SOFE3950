@@ -17,10 +17,13 @@
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
 #define ARG_NUM 10
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 
 // Put global environment variables here
 char PWD[BUFFER_LEN];
 char SHELL[BUFFER_LEN];
+int arg_c;
 
 // Define functions declared in myshell.h here
 
@@ -31,7 +34,7 @@ int main(int argc, char *argv[])
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
 
-    printf("%s $", getcwd(PWD, sizeof(PWD)));
+    printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
     getcwd(SHELL, sizeof(SHELL));
 
     // Parse the commands provided using argc and argv
@@ -39,6 +42,7 @@ int main(int argc, char *argv[])
     // Perform an infinite loop getting command input from users
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
     {
+        arg_c = 0;
         // Perform string tokenization to get the command and argument
         char delimeters[] = " \n";
         char* token = strtok(buffer, delimeters);
@@ -53,6 +57,7 @@ int main(int argc, char *argv[])
         int j = 0;
 
         while (token) {
+          arg_c++;
           if (strcmp(command, token) != 0) args[j++] = token;
           token = strtok(NULL, delimeters);
         }
@@ -71,41 +76,36 @@ int main(int argc, char *argv[])
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {
-			puts("cd command");
 			// Allocate memory in the first place you use the global var
-			PWD = (char* )malloc(sizeof (char));
-			if (args[0] == NULL)
-			{
-				if (PWD == NULL)
-				{
-					// cd command has not been used before, same directory as
-					//shell parent process
-					char cwd[256];
-					getcwd(cwd, sizeof(cwd));
+			getcwd(PWD, sizeof(PWD));
+      if (arg_c > 2) {
+        char d[BUFFER_LEN] = "";
+        for (int i = 0; i < arg_c-1; i++) {
+          strcat(d, args[i]);
+          if (i < arg_c - 2) strcat(d, " ");
+        }
+        if (chdir(d) != 0)
+        {
+          perror("Failed to change directory, the directory may not exist. \n");
+        }
+      } else {
+        if (chdir(args[0]) != 0)
+        {
+          perror("Failed to change directory, the directory may not exist. \n");
+        }
+      }
 
-					printf("Current working directory: %s \n", cwd);
-				}
-				else
-				{
-					// cd command has been used before
-					printf("Current working directory: %s \n", PWD);
-				}
-			}
-			else if (chdir(args[0]) != 0)
-			{
-				perror("Failed to change directory, the directory may not exist. \n");
-			}
 
 			if (getcwd(PWD, sizeof(PWD)) == NULL)
 			{
 				perror("Error in setting PWD. \n");
 			}
-        }
-		
+    }
+
 		else if (strcmp(command, "cwd") == 0)
 		{
 			if (PWD == NULL)
-			{ 
+			{
 				// cd command has not been used yet, same directory as
 				//shell parent process
 				char cwd[256];
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
         memset(command, 0, 255);
         memset(arg, 0 , 255);
-        printf("%s $", getcwd(PWD, sizeof(PWD)));
+        printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
     }
     return EXIT_SUCCESS;
 }

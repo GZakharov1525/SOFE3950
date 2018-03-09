@@ -1,6 +1,11 @@
 bin
 build
 
+#CMake files
+*.cmake
+CMakeCache.txt
+CMakeFiles
+
 # Compiled Object files
 *.slo
 *.lo
