@@ -1,0 +1,32 @@
+available commands:
+cd
+-----------------------------------------------------
+Changes working directory.
+
+cwd
+-----------------------------------------------------
+Displays current working directory.
+
+help
+-----------------------------------------------------
+Displays help instructions.
+
+environ
+-----------------------------------------------------
+Displays names and values of environment variables.
+
+echo
+-----------------------------------------------------
+Displays user input in console/terminal.
+
+clr
+-----------------------------------------------------
+Clears the console/terminal screen.
+
+dir
+-----------------------------------------------------
+Lists content of current working directory.
+
+quit
+-----------------------------------------------------
+Exits shell.

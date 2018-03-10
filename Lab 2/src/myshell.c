@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(command, "help") == 0) {
       // puts("in help");
       FILE *file;
-      file = fopen("readme.txt", "r");
+      file = fopen("help.txt", "r");
       if (file == NULL) {
         fputs("Error opening help instructions.", stdout);
       }
@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
 		}
 		else
 		{
-			while (n > 0) // while n is a non-zero number
+			while (n--) // while n is a non-zero number
 			{
 				printf("%s \n", namelist[n]->d_name);
 				free(namelist[n]);
