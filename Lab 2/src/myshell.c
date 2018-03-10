@@ -1,7 +1,7 @@
 /*
  * MyShell Project for SOFE 3950U / CSCI 3020U: Operating Systems
  *
- * Copyright (C) 2017, <GROUP MEMBERS>
+ * Copyright (C) 2017, <Thomas Blain, George Zakharov>
  * All rights reserved.
  *
  */
@@ -25,7 +25,9 @@
 char PWD[BUFFER_LEN];
 char SHELL[BUFFER_LEN];
 int arg_c;
-int using_files = 0;
+int redirect = 0;
+int using_batch = 0;
+FILE *batchfile;
 
 // Define functions declared in myshell.h here
 
@@ -37,10 +39,12 @@ int main(int argc, char *argv[])
   char arg[BUFFER_LEN] = {0};
 
   // Parse the commands provided using argc and argv
-  if (argc > 1)
-          using_files = 1;
+  if (argc > 2)
+          redirect = 1;
+  if (argc == 2)
+          using_batch = 1;
 
-  if (using_files == 0)
+  if (redirect == 0)
   {
     printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET, getcwd(PWD, sizeof(PWD)));
   }
@@ -51,17 +55,28 @@ int main(int argc, char *argv[])
   getcwd(SHELL, sizeof(SHELL));
 
   // Attempt to open a file that has been invoked through command line
-  FILE *batchfile;
-  batchfile = fopen(argv[1], "r");
-  if (batchfile == NULL)
+  if (using_batch)
   {
-	  fputs("Error opening invoked file.", stdout);
+    batchfile = fopen(argv[1], "r");
+    if (batchfile == NULL)
+    {
+      fputs("Error opening invoked file.", stdout);
+    }
   }
 
   // Perform an infinite loop getting command input from users
   while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
   {
+    //runtime arg counter
     arg_c = 0;
+
+    //Read in one line (a command) each loop
+    if (using_batch)
+    {
+      fgets(buffer, BUFFER_LEN, file);
+      if (buffer == NULL) return EXIT_SUCCESS;
+    }
+
     // Perform string tokenization to get the command and argument
     char delimeters[] = " \n";
     char *token = strtok(buffer, delimeters);
@@ -83,13 +98,6 @@ int main(int argc, char *argv[])
               args[j++] = token;
       token = strtok(NULL, delimeters);
     }
-
-	//Read in one line (a command) each loop
-	//int counter = 0;
-	if (batchfile != NULL)
-	{
-
-	}
 
     // Check the command and execute the operations for each command
     // cd command -- change the current directory
@@ -162,7 +170,8 @@ int main(int argc, char *argv[])
       printf("PWD: %s\n", PWD);
       printf("SHELL: %s\n", SHELL);
       printf("arg_c: %d\n", arg_c);
-      printf("using_files: %d\n", using_files);
+      printf("redirect: %d\n", redirect);
+      printf("using_batch: %d\n", using_batch);
     }
 
     // other commands here...
@@ -224,7 +233,7 @@ int main(int argc, char *argv[])
 
     memset(command, 0, 255);
     memset(arg, 0, 255);
-    if (using_files == 0) {
+    if (redirect == 0) {
       printf(ANSI_COLOR_GREEN "%s $ " ANSI_COLOR_RESET,
              getcwd(PWD, sizeof(PWD)));
     }
