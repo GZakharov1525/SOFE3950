@@ -65,16 +65,27 @@ int main(int argc, char *argv[])
   }
 
   // Perform an infinite loop getting command input from users
-  while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
+  while (1)
   {
     //runtime arg counter
     arg_c = 0;
 
-    //Read in one line (a command) each loop
+    //use file stream for commands if batchfile specified
     if (using_batch)
     {
-      fgets(buffer, BUFFER_LEN, file);
-      if (buffer == NULL) return EXIT_SUCCESS;
+      if (fgets(buffer, BUFFER_LEN, batchfile) == NULL)
+      {
+        break;
+      }
+    }
+
+    //use stdin otherwise
+    else
+    {
+      if (fgets(buffer, BUFFER_LEN, stdin) == NULL)
+      {
+        break;
+      }
     }
 
     // Perform string tokenization to get the command and argument
