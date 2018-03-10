@@ -50,6 +50,14 @@ int main(int argc, char *argv[])
   }
   getcwd(SHELL, sizeof(SHELL));
 
+  // Attempt to open a file that has been invoked through command line
+  FILE *batchfile;
+  batchfile = fopen(argv[1], "r");
+  if (batchfile == NULL)
+  {
+	  fputs("Error opening invoked file.", stdout);
+  }
+
   // Perform an infinite loop getting command input from users
   while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
   {
@@ -75,6 +83,13 @@ int main(int argc, char *argv[])
               args[j++] = token;
       token = strtok(NULL, delimeters);
     }
+
+	//Read in one line (a command) each loop
+	//int counter = 0;
+	if (batchfile != NULL)
+	{
+
+	}
 
     // Check the command and execute the operations for each command
     // cd command -- change the current directory
