@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <signal.h>
 
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
@@ -27,6 +28,7 @@ char SHELL[BUFFER_LEN];
 int arg_c;
 int redirect = 0;
 int using_batch = 0;
+int end_pause = 0;
 FILE *batchfile;
 
 // Define functions declared in myshell.h here
@@ -183,6 +185,11 @@ int main(int argc, char *argv[])
       printf("arg_c: %d\n", arg_c);
       printf("redirect: %d\n", redirect);
       printf("using_batch: %d\n", using_batch);
+    }
+
+    else if (strcmp(command, "pause") == 0)
+    {
+      while (getc(stdin) != '\n');
     }
 
     // other commands here...
