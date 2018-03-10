@@ -129,16 +129,9 @@ int main(int argc, char *argv[])
     {
       // puts("in help");
       FILE *file;
-<<<<<<< HEAD
       file = fopen("help.txt", "r");
       if (file == NULL) {
         fputs("Error opening help instructions.", stdout);
-=======
-      file = fopen("readme.txt", "r");
-      if (file == NULL)
-      {
-              fputs("Error opening help instructions.", stdout);
->>>>>>> 039688ff4479c68121310ba51a311f7b6e59844e
       }
       // puts("after file open");
       char readBuffer[100];
@@ -172,7 +165,6 @@ int main(int argc, char *argv[])
       printf("\e[1;1H\e[2J");
     }
 
-<<<<<<< HEAD
 	else if (strcmp(command, "dir") == 0)
 	{
 		struct dirent **namelist;
@@ -201,36 +193,6 @@ int main(int argc, char *argv[])
 			}
 			free(namelist);
 		}
-=======
-    else if (strcmp(command, "dir") == 0)
-    {
-      struct dirent **namelist;
-      int n;
-      char directory[BUFFER_LEN];
-      if (PWD == NULL)
-      {
-        getcwd(directory, sizeof(directory));
-        n = scandir(directory, &namelist, NULL, alphasort);
-      }
-      else
-      {
-        n = scandir(PWD, &namelist, NULL, alphasort);
-      }
-
-      if (n < 0)
-      {
-        perror("Scandir()");
-      }
-      else
-      {
-        while (n > 0) // while n is a non-zero number
-        {
-                printf("%s \n", namelist[--n]->d_name);
-                free(namelist[n]);
-        }
-        free(namelist);
-      }
->>>>>>> 039688ff4479c68121310ba51a311f7b6e59844e
     }
 
     // quit command -- exit the shell
