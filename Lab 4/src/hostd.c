@@ -18,7 +18,7 @@
 #include "hostd.h"
 
 // Put macros or constants here using #define
-#define MEMORY 1024
+//#define MEMORY 1024 // Defined in utility.h
 
 // Put global environment variables here
 
