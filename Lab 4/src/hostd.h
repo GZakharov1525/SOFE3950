@@ -12,7 +12,7 @@
 
 // Include any relevant functions declarations here they must start with the 
 // extern keyword such as in the following example:
-extern void print_process(proc process);
+extern void print_process(Proc process);
 
 
 #endif /* HOSTD_H_ */

@@ -26,8 +26,6 @@
 
 int main(int argc, char *argv[])
 {
-    // ==================== YOUR CODE HERE ==================== //
-    
     // Load the dispatchlist
     
     // Add each process structure instance to the job dispatch list queue
@@ -35,7 +33,7 @@ int main(int argc, char *argv[])
     // Iterate through each item in the job dispatch list, add each process
     // to the appropriate queues
 
-    // Allocate the resources for each process before it's executed
+    // Allocate the resources for each process before it's executed	
 
     // Execute the process binary using fork and exec
 
