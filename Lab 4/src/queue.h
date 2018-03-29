@@ -10,11 +10,7 @@
 
 #include "utility.h"
 
-// Your linked list structure for your queue
-typedef
-{
-  Proc process;
-} node_t; 
+// node_t struct definition was here, moved to utility.h
 
 // Include your relevant FIFO queue functions declarations here they must start 
 // with the extern keyword such as in the following examples:

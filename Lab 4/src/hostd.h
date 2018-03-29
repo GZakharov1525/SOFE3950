@@ -14,5 +14,7 @@
 // extern keyword such as in the following example:
 extern void print_process(Proc process);
 
+// Forward declaration for an externally linked function in utility.h
+//void load_dispatch(char *dispatch_file, node_t *queue);
 
 #endif /* HOSTD_H_ */

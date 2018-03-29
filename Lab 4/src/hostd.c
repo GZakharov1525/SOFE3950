@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "queue.h"
-#include "utility.h"
+//#include "utility.h"
 #include "hostd.h"
 
 // Put macros or constants here using #define
@@ -27,6 +27,11 @@
 int main(int argc, char *argv[])
 {
     // Load the dispatchlist
+	node_t* test;
+	if (argc > 1)
+	{
+		load_dispatch(argv[1], test);
+	}
     
     // Add each process structure instance to the job dispatch list queue
 
