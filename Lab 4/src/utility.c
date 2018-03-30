@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 #include "utility.h"
+#include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,12 +12,13 @@ int alloc_mem(Resources res, int size) {
   // Keep track of the starting index
   int startIndex = 0;
   // Leave 64 MBs space for real-time processes using offset
-  int offset = res.memory.size - 64;
+  int offset = (sizeof(res.memory)/sizeof(res.memory[0])) - 64;
   // Start from each position in array and check forwards for
   // sufficient empty space
+  int allocation = 0;
   for (int count = 0; count < offset; count++) {
     // Keep track of how much space you have so far
-    int allocation = 0;
+    allocation = 0;
     // Look forwards in the memory to see if you can find the required
     // amount of empty space
     for (int index = count; index < offset; index++) {
@@ -62,26 +64,33 @@ void free_mem(Resources res, int index, int size) {
   }
 }
 
-void load_dispatch(char *dispatch_file, node_t *queue) 
+void load_dispatch(char *dispatch_file, node_t *queue)
 {
   FILE *dispatch_list;
   dispatch_list = fopen(dispatch_file, "r");
+
   // Check for error when opening file
-  if (dispatch_list == NULL) 
+  if (dispatch_list == NULL)
   {
     printf("Could not open solution file.");
     exit(1);
   }
 
-  while (!feof(dispatch_list)) 
+  char* line = NULL;
+  size_t len = 0;
+  ssize_t read;
+  while ((read = getline(&line, &len, dispatch_list)) != -1)
   {
+    if (read == 1) continue;
     int tempData[9] = {0};
-	int num;
-    for (int chars = 0; chars < 9; chars++) 
-	{
-		fscanf(dispatch_list, "%d", &num) > 0)
-		tempData[chars] = num;
-		printf("%d |", tempData[chars]);
+	  int num;
+
+
+    for (int chars = 0; chars < 9; chars++)
+	  {
+		  sscanf(line, " %d", &num);
+      tempData[chars] = num;
+      printf("%d |", tempData[chars]);
 
       //char data = fgetc(dispatch_list);
       //int toInt = data - '0';
@@ -99,6 +108,7 @@ void load_dispatch(char *dispatch_file, node_t *queue)
     //fgetc(dispatch_list);
     //fgetc(dispatch_list);
   }
+  printf("done");
 
   fclose(dispatch_list);
 }
