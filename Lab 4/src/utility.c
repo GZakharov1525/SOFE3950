@@ -12,7 +12,7 @@ int alloc_mem(Resources res, int size) {
   // Keep track of the starting index
   int startIndex = 0;
   // Leave 64 MBs space for real-time processes using offset
-  int offset = (sizeof(res.memory)/sizeof(res.memory[0])) - 64;
+  int offset = (sizeof(res.memory) / sizeof(res.memory[0])) - 64;
   // Start from each position in array and check forwards for
   // sufficient empty space
   int allocation = 0;
@@ -64,51 +64,48 @@ void free_mem(Resources res, int index, int size) {
   }
 }
 
-void load_dispatch(char *dispatch_file, node_t *queue)
+void load_dispatch(char *dispatch_file, node_t *queue) 
 {
   FILE *dispatch_list;
   dispatch_list = fopen(dispatch_file, "r");
 
   // Check for error when opening file
-  if (dispatch_list == NULL)
+  if (dispatch_list == NULL) 
   {
     printf("Could not open solution file.");
     exit(1);
   }
 
-  char* line = NULL;
-  size_t len = 0;
-  ssize_t read;
-  while ((read = getline(&line, &len, dispatch_list)) != -1)
+  puts("in loader");
+
+  int eof; // Check for end of the file
+  Proc newProc; // Declare process to be initialized
+  while (eof != EOF) 
   {
-    if (read == 1) continue;
-    int tempData[9] = {0};
-	  int num;
+	// Read file one line at a time and use it to initialize process
+	  // added extra %*c at the end to ignore the \n character that is left over
+    eof = fscanf(dispatch_list, "%d%*c %d%*c %d%*c %d%*c %d%*c %d%*c %d%*c %d %*c",
+                 &newProc.arrival, &newProc.priority, &newProc.cpuTimeLeft,
+                 &newProc.memSize, &newProc.printersReq, &newProc.scannersReq,
+                 &newProc.modemsReq, &newProc.cdDrivesReq);
 
+	printf("int %d, EOF %d \n", eof, EOF);
 
-    for (int chars = 0; chars < 9; chars++)
-	  {
-		  sscanf(line, " %d", &num);
-      tempData[chars] = num;
-      printf("%d |", tempData[chars]);
-
-      //char data = fgetc(dispatch_list);
-      //int toInt = data - '0';
-      //tempData[chars] = toInt;
-      //// Skip over comma and space
-      //fgetc(dispatch_list);
-      //fgetc(dispatch_list);
-    }
-    // Initialize process using array and add to queue
-    Proc newArrival = {tempData[0], tempData[1], tempData[2],
-                       tempData[3], tempData[4], tempData[5],
-                       tempData[6], tempData[7], tempData[8]};
-    push(queue, newArrival);
-    // Skip newline chars
-    //fgetc(dispatch_list);
-    //fgetc(dispatch_list);
+	// Check to make sure data read in was valid
+	if (eof == -1)
+	{
+		//eof = -1;
+		puts("reached eof");
+	}
+	else
+	{
+		push(queue, newProc);
+		puts("created new process: ");
+		printf("%d %d %d %d %d %d %d %d \n", newProc.arrival, newProc.priority, newProc.cpuTimeLeft, newProc.memSize,
+			newProc.printersReq, newProc.scannersReq, newProc.modemsReq, newProc.cdDrivesReq);
+	}
   }
-  printf("done");
-
-  fclose(dispatch_list);
+	puts("closing file");
+	fclose(dispatch_list);
+	puts("closed file");
 }
